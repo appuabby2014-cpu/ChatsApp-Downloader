@@ -1,0 +1,147 @@
+<svg width="512" height="512" viewBox="0 0 512 512"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+
+    <!-- Main purple gradient -->
+    <linearGradient id="bg" x1="70" y1="30" x2="450" y2="490"
+                    gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#C084FC"/>
+      <stop offset="0.28" stop-color="#8B5CF6"/>
+      <stop offset="0.65" stop-color="#6D28D9"/>
+      <stop offset="1" stop-color="#4C1D95"/>
+    </linearGradient>
+
+    <!-- Top glow -->
+    <linearGradient id="shine" x1="80" y1="40" x2="400" y2="250"
+                    gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.48"/>
+      <stop offset="0.45" stop-color="#E9D5FF" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- C gradient -->
+    <linearGradient id="letter" x1="200" y1="160" x2="330" y2="360"
+                    gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.55" stop-color="#F5F3FF"/>
+      <stop offset="1" stop-color="#DDD6FE"/>
+    </linearGradient>
+
+    <!-- Outer shadow -->
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18"
+                    flood-color="#1E0A3C"
+                    flood-opacity="0.42"/>
+    </filter>
+
+    <!-- C shadow -->
+    <filter id="cshadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8"
+                    flood-color="#35106F"
+                    flood-opacity="0.55"/>
+    </filter>
+
+    <!-- Soft glow -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+
+  </defs>
+
+  <!-- Transparent space around the icon -->
+  <rect width="512" height="512" fill="none"/>
+
+  <!-- Soft purple glow -->
+  <rect x="48" y="48" width="416" height="416"
+        rx="105"
+        fill="#8B5CF6"
+        opacity="0.28"
+        filter="url(#glow)"/>
+
+  <!-- Main icon -->
+  <rect x="48" y="48"
+        width="416"
+        height="416"
+        rx="105"
+        fill="url(#bg)"
+        filter="url(#shadow)"/>
+
+  <!-- Inner border -->
+  <rect x="62" y="62"
+        width="388"
+        height="388"
+        rx="92"
+        fill="none"
+        stroke="#E9D5FF"
+        stroke-opacity="0.22"
+        stroke-width="4"/>
+
+  <!-- Large glossy upper reflection -->
+  <path
+    d="M82 151
+       C95 89 139 68 202 68
+       H306
+       C366 68 408 89 430 132
+       C344 108 249 103 166 119
+       C132 125 104 137 82 151Z"
+    fill="url(#shine)"/>
+
+  <!-- Subtle bottom depth -->
+  <path
+    d="M72 354
+       C132 412 215 438 304 432
+       C367 428 414 405 440 365
+       V382
+       C440 426 408 450 362 450
+       H150
+       C103 450 72 420 72 378Z"
+    fill="#32106B"
+    opacity="0.18"/>
+
+  <!-- C shadow -->
+  <path
+    d="M337 179
+       C313 151 279 137 240 137
+       C170 137 126 188 126 256
+       C126 324 170 375 240 375
+       C279 375 313 361 337 333
+       L293 289
+       C279 304 261 312 240 312
+       C205 312 183 290 183 256
+       C183 222 205 200 240 200
+       C261 200 279 208 293 223
+       Z"
+    fill="#35106F"
+    opacity="0.55"
+    transform="translate(0 10)"
+    filter="url(#cshadow)"/>
+
+  <!-- Main C -->
+  <path
+    d="M337 169
+       C313 141 279 127 240 127
+       C170 127 126 178 126 246
+       C126 314 170 365 240 365
+       C279 365 313 351 337 323
+       L293 279
+       C279 294 261 302 240 302
+       C205 302 183 280 183 246
+       C183 212 205 190 240 190
+       C261 190 279 198 293 213
+       Z"
+    fill="url(#letter)"
+    filter="url(#cshadow)"/>
+
+  <!-- Tiny highlight on C -->
+  <path
+    d="M240 143
+       C188 143 151 179 144 229
+       C155 192 187 166 231 164
+       C259 163 282 172 301 191
+       L314 178
+       C295 155 270 143 240 143Z"
+    fill="#FFFFFF"
+    opacity="0.72"/>
+
+</svg>
