@@ -676,6 +676,47 @@
             flex-wrap: wrap;
         }
 
+        /* PHONE INSTALL BOX */
+
+        .phone-install {
+            display: none;
+
+            max-width: 650px;
+
+            margin: 30px auto 0;
+
+            padding: 25px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.07),
+                    rgba(255,255,255,.025)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.09);
+
+            color: #b9b1c8;
+
+            line-height: 1.7;
+        }
+
+        .phone-install h3 {
+            color: white;
+
+            margin-bottom: 12px;
+
+            font-size: 21px;
+        }
+
+        .phone-install strong {
+            color: #c4b5fd;
+        }
+
         /* INSTALL STATUS */
 
         #installStatus {
@@ -1182,50 +1223,155 @@
             Ready to chat?
         </h2>
 
-        <p id="downloadDescription">
+        <p>
             Get ChatsApp on your device,
-            or install the app directly
-            on your computer.
+            wherever you are.
         </p>
 
-        <div class="download-buttons">
+        <!-- ANDROID -->
 
-            <!-- ANDROID -->
+        <div
+            id="androidSection"
+            style="display:none;"
+        >
 
-            <a
-                id="androidDownload"
-                class="button primary"
-                href="https://drive.google.com/file/d/1mH4k62S5ORlx12XQ3Iay-Ne7EaqLyIyh/view?usp=drive_link"
-                target="_blank"
-                rel="noopener"
-            >
-                📱 Download for Android
-            </a>
+            <div class="download-buttons">
 
-            <!-- WINDOWS / MAC -->
+                <a
+                    id="androidDownload"
+                    class="button primary"
+                    href="https://drive.google.com/file/d/1mH4k62S5ORlx12XQ3Iay-Ne7EaqLyIyh/view?usp=drive_link"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    📱 Download for Android
+                </a>
 
-            <button
-                id="computerInstallButton"
-                class="button secondary"
-                type="button"
-            >
-                🖥️ Download for Computer
-            </button>
+            </div>
 
-            <!-- IPHONE / IPAD -->
-
-            <button
-                id="appleInstallButton"
-                class="button secondary"
-                type="button"
-                style="display:none;"
-            >
-                🍎 Add ChatsApp to Home Screen
-            </button>
+            <div id="androidStatus">
+            </div>
 
         </div>
 
-        <div id="installStatus"></div>
+
+        <!-- IPHONE -->
+
+        <div
+            id="iphoneSection"
+            style="display:none;"
+        >
+
+            <div class="download-buttons">
+
+                <button
+                    id="iphoneInstallButton"
+                    class="button primary"
+                    type="button"
+                >
+                    🍎 Install on iPhone
+                </button>
+
+            </div>
+
+            <div
+                class="phone-install"
+                id="iphoneInstructions"
+            >
+
+                <h3>
+                    🍎 Install ChatsApp on iPhone
+                </h3>
+
+                <p>
+                    ChatsApp works on iPhone as a web app.
+                </p>
+
+                <p style="margin-top:12px;">
+
+                    <strong>1.</strong>
+                    Open ChatsApp in
+                    <strong>Safari</strong>.
+
+                    <br>
+
+                    <strong>2.</strong>
+                    Tap the
+                    <strong>Share</strong>
+                    button.
+
+                    <br>
+
+                    <strong>3.</strong>
+                    Scroll down and tap
+                    <strong>Add to Home Screen</strong>.
+
+                    <br>
+
+                    <strong>4.</strong>
+                    Tap
+                    <strong>Add</strong>.
+
+                </p>
+
+                <p style="margin-top:12px;">
+                    💜 ChatsApp will then appear on your
+                    iPhone Home Screen like an app.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMPUTER -->
+
+        <div
+            id="computerSection"
+            style="display:none;"
+        >
+
+            <div class="download-buttons">
+
+                <button
+                    id="installButton"
+                    class="button secondary"
+                    type="button"
+                >
+                    🖥️ Download for Computer
+                </button>
+
+            </div>
+
+            <div id="installStatus">
+            </div>
+
+        </div>
+
+
+        <!-- UNKNOWN DEVICE -->
+
+        <div
+            id="unknownSection"
+            style="display:none;"
+        >
+
+            <div class="download-buttons">
+
+                <button
+                    id="unknownInstallButton"
+                    class="button primary"
+                    type="button"
+                >
+                    💜 Install ChatsApp
+                </button>
+
+            </div>
+
+            <div id="unknownStatus">
+            </div>
+
+        </div>
 
     </section>
 
@@ -1295,16 +1441,14 @@
         const userAgent =
             navigator.userAgent ||
             navigator.vendor ||
-            window.opera;
-
+            window.opera ||
+            "";
 
         const isAndroid =
             /Android/i.test(userAgent);
 
-
         const isIPhone =
             /iPhone/i.test(userAgent);
-
 
         const isIPad =
             /iPad/i.test(userAgent) ||
@@ -1313,126 +1457,80 @@
                 navigator.maxTouchPoints > 1
             );
 
-
-        const isAppleMobile =
+        const isIOS =
             isIPhone ||
             isIPad;
 
-
-        const isWindows =
-            /Windows/i.test(userAgent);
-
-
-        const isMac =
-            /Macintosh|Mac OS X/i.test(userAgent) &&
-            !isAppleMobile;
-
-
         const isMobile =
             isAndroid ||
-            isAppleMobile;
+            isIOS;
+
+        const isComputer =
+            !isMobile;
+
+
+        const androidSection =
+            document.getElementById(
+                "androidSection"
+            );
+
+        const iphoneSection =
+            document.getElementById(
+                "iphoneSection"
+            );
+
+        const computerSection =
+            document.getElementById(
+                "computerSection"
+            );
+
+        const unknownSection =
+            document.getElementById(
+                "unknownSection"
+            );
 
 
         /* ==========================================
-           DOWNLOAD ELEMENTS
+           SHOW CORRECT DOWNLOAD
         ========================================== */
 
-        const androidDownload =
-            document.getElementById(
-                "androidDownload"
-            );
+        if (isAndroid) {
 
+            androidSection.style.display =
+                "block";
 
-        const computerInstallButton =
-            document.getElementById(
-                "computerInstallButton"
-            );
+        }
 
+        else if (isIOS) {
 
-        const appleInstallButton =
-            document.getElementById(
-                "appleInstallButton"
-            );
+            iphoneSection.style.display =
+                "block";
 
+        }
 
-        const installStatus =
-            document.getElementById(
-                "installStatus"
-            );
+        else if (isComputer) {
 
+            computerSection.style.display =
+                "block";
 
-        const downloadDescription =
-            document.getElementById(
-                "downloadDescription"
-            );
+        }
+
+        else {
+
+            unknownSection.style.display =
+                "block";
+
+        }
 
 
         /* ==========================================
            ANDROID
         ========================================== */
 
-        if (isAndroid) {
-
-            androidDownload.style.display =
-                "inline-flex";
-
-            computerInstallButton.style.display =
-                "none";
-
-            appleInstallButton.style.display =
-                "none";
-
-            downloadDescription.textContent =
-                "Download ChatsApp for Android and start chatting.";
-
-        }
-
-
-        /* ==========================================
-           IPHONE / IPAD
-        ========================================== */
-
-        else if (isAppleMobile) {
-
-            androidDownload.style.display =
-                "none";
-
-            computerInstallButton.style.display =
-                "none";
-
-            appleInstallButton.style.display =
-                "inline-flex";
-
-            downloadDescription.textContent =
-                "Add ChatsApp to your Home Screen and use it like an app.";
-
-        }
-
-
-        /* ==========================================
-           WINDOWS / MAC / COMPUTER
-        ========================================== */
-
-        else {
-
-            androidDownload.style.display =
-                "none";
-
-            computerInstallButton.style.display =
-                "inline-flex";
-
-            appleInstallButton.style.display =
-                "none";
-
-            downloadDescription.textContent =
-                "Install ChatsApp directly on your computer.";
-
-        }
-
-
-        /* ==========================================
-           ANDROID SAFETY CHECK
-        ========================================== */
+        const androidDownload =
+            document.getElementById(
+                "androidDownload"
+            );
 
         androidDownload.addEventListener(
             "click",
@@ -1442,10 +1540,45 @@
 
                     event.preventDefault();
 
-                    installStatus.textContent =
-                        "📱 The Android download is only available on Android devices.";
+                    alert(
+                        "📱 The Android download is only available on Android devices."
+                    );
 
                 }
+
+            }
+        );
+
+
+        /* ==========================================
+           IPHONE INSTALL
+        ========================================== */
+
+        const iphoneInstallButton =
+            document.getElementById(
+                "iphoneInstallButton"
+            );
+
+        const iphoneInstructions =
+            document.getElementById(
+                "iphoneInstructions"
+            );
+
+
+        iphoneInstallButton.addEventListener(
+            "click",
+            function() {
+
+                iphoneInstructions.style.display =
+                    "block";
+
+                iphoneInstallButton.textContent =
+                    "🍎 Follow the steps below";
+
+                iphoneInstructions.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
 
             }
         );
@@ -1494,6 +1627,16 @@
 
         let deferredPrompt = null;
 
+        const installButton =
+            document.getElementById(
+                "installButton"
+            );
+
+        const installStatus =
+            document.getElementById(
+                "installStatus"
+            );
+
 
         window.addEventListener(
             "beforeinstallprompt",
@@ -1503,14 +1646,17 @@
 
                 deferredPrompt = event;
 
+                if (installButton) {
 
-                if (!isMobile) {
-
-                    computerInstallButton.textContent =
+                    installButton.textContent =
                         "🖥️ Install ChatsApp";
 
+                }
+
+                if (installStatus) {
+
                     installStatus.textContent =
-                        "ChatsApp is ready to install! 💜";
+                        "ChatsApp is ready to install on this computer! 💜";
 
                 }
 
@@ -1522,178 +1668,181 @@
            COMPUTER INSTALL
         ========================================== */
 
-        computerInstallButton.addEventListener(
-            "click",
-            async () => {
+        if (installButton) {
 
-                if (isMobile) {
+            installButton.addEventListener(
+                "click",
+                async () => {
 
-                    installStatus.textContent =
-                        "🖥️ Computer installation isn't available on mobile.";
-
-                    return;
-
-                }
-
-
-                const standalone =
-                    window.matchMedia(
-                        "(display-mode: standalone)"
-                    ).matches ||
-                    window.navigator.standalone === true;
-
-
-                if (standalone) {
-
-                    installStatus.textContent =
-                        "✅ ChatsApp is already installed!";
-
-                    return;
-
-                }
-
-
-                if (deferredPrompt) {
-
-                    deferredPrompt.prompt();
-
-                    const result =
-                        await deferredPrompt.userChoice;
-
-
-                    console.log(
-                        "Install result:",
-                        result.outcome
-                    );
-
-
-                    deferredPrompt = null;
-
-
-                    if (
-                        result.outcome ===
-                        "accepted"
-                    ) {
-
-                        computerInstallButton.textContent =
-                            "✅ ChatsApp Installed";
+                    if (!isComputer) {
 
                         installStatus.textContent =
-                            "ChatsApp has been installed! 💜";
+                            "🖥️ This installation option is for computers.";
+
+                        return;
 
                     }
 
-                    return;
 
-                }
+                    const standalone =
+                        window.matchMedia(
+                            "(display-mode: standalone)"
+                        ).matches ||
+                        window.navigator.standalone === true;
 
 
-                if (isWindows) {
+                    if (standalone) {
+
+                        installStatus.textContent =
+                            "✅ ChatsApp is already installed!";
+
+                        return;
+
+                    }
+
+
+                    if (deferredPrompt) {
+
+                        deferredPrompt.prompt();
+
+                        const result =
+                            await deferredPrompt.userChoice;
+
+                        console.log(
+                            "Install result:",
+                            result.outcome
+                        );
+
+                        deferredPrompt = null;
+
+                        if (
+                            result.outcome ===
+                            "accepted"
+                        ) {
+
+                            installButton.textContent =
+                                "✅ ChatsApp Installed";
+
+                            installStatus.textContent =
+                                "ChatsApp has been installed! 💜";
+
+                        }
+
+                        return;
+
+                    }
+
 
                     installStatus.innerHTML =
-                        "💡 Chrome or Edge can install ChatsApp.<br>" +
-                        "Look for the <b>Install</b> icon in the address bar.";
+                        "💡 Chrome hasn't shown the install prompt yet.<br>" +
+                        "Look for the <b>Install</b> icon in your browser's address bar.";
 
                 }
+            );
 
-                else if (isMac) {
-
-                    installStatus.innerHTML =
-                        "💡 In Chrome or Edge, look for the <b>Install</b> icon in the address bar.";
-
-                }
-
-                else {
-
-                    installStatus.innerHTML =
-                        "💡 Look for the <b>Install</b> option in your browser's address bar or menu.";
-
-                }
-
-            }
-        );
+        }
 
 
         /* ==========================================
-           IPHONE / IPAD INSTALL
+           UNKNOWN DEVICE INSTALL
         ========================================== */
 
-        appleInstallButton.addEventListener(
-            "click",
-            () => {
+        const unknownInstallButton =
+            document.getElementById(
+                "unknownInstallButton"
+            );
 
-                const standalone =
-                    window.navigator.standalone === true ||
-                    window.matchMedia(
-                        "(display-mode: standalone)"
-                    ).matches;
+        const unknownStatus =
+            document.getElementById(
+                "unknownStatus"
+            );
 
 
-                if (standalone) {
+        if (unknownInstallButton) {
 
-                    installStatus.textContent =
-                        "✅ ChatsApp is already on your Home Screen!";
+            unknownInstallButton.addEventListener(
+                "click",
+                async () => {
 
-                    return;
+                    if (deferredPrompt) {
+
+                        deferredPrompt.prompt();
+
+                        const result =
+                            await deferredPrompt.userChoice;
+
+                        deferredPrompt = null;
+
+                        if (
+                            result.outcome ===
+                            "accepted"
+                        ) {
+
+                            unknownInstallButton.textContent =
+                                "✅ ChatsApp Installed";
+
+                            unknownStatus.textContent =
+                                "ChatsApp has been installed! 💜";
+
+                        }
+
+                        return;
+
+                    }
+
+                    unknownStatus.innerHTML =
+                        "💡 Look for the <b>Install</b> option in your browser menu.";
 
                 }
+            );
 
-
-                installStatus.innerHTML =
-                    "🍎 <b>On your iPhone/iPad:</b><br>" +
-                    "1. Tap the <b>Share</b> button in Safari.<br>" +
-                    "2. Scroll down and tap <b>Add to Home Screen</b>.<br>" +
-                    "3. Tap <b>Add</b>. 💜";
-
-            }
-        );
+        }
 
 
         /* ==========================================
-           APP INSTALLED
+           AFTER INSTALL
         ========================================== */
 
         window.addEventListener(
             "appinstalled",
             () => {
 
-                computerInstallButton.textContent =
-                    "✅ ChatsApp Installed";
+                if (installButton) {
 
-                computerInstallButton.disabled =
-                    true;
+                    installButton.textContent =
+                        "✅ ChatsApp Installed";
 
-                installStatus.textContent =
-                    "ChatsApp is now installed on your computer! 💜";
+                    installButton.disabled =
+                        true;
+
+                }
+
+                if (installStatus) {
+
+                    installStatus.textContent =
+                        "ChatsApp is now installed on your computer! 💜";
+
+                }
+
+                if (unknownInstallButton) {
+
+                    unknownInstallButton.textContent =
+                        "✅ ChatsApp Installed";
+
+                    unknownInstallButton.disabled =
+                        true;
+
+                }
+
+                if (unknownStatus) {
+
+                    unknownStatus.textContent =
+                        "ChatsApp is now installed! 💜";
+
+                }
 
             }
         );
-
-
-        /* ==========================================
-           APPLE STANDALONE DETECTION
-        ========================================== */
-
-        if (
-            isAppleMobile &&
-            (
-                window.navigator.standalone === true ||
-                window.matchMedia(
-                    "(display-mode: standalone)"
-                ).matches
-            )
-        ) {
-
-            appleInstallButton.textContent =
-                "✅ ChatsApp Installed";
-
-            appleInstallButton.disabled =
-                true;
-
-            installStatus.textContent =
-                "ChatsApp is already installed on your Home Screen! 💜";
-
-        }
 
     </script>
 
